@@ -51,8 +51,15 @@ function drawText(text, x, y) {
   ctx.fillText(text, x, y);
 }
 
+function drawNet() {
+  for (let i = 0; i <= canvas.height; i += 15) {
+    drawRect(canvas.width / 2 - 1, i, 2, 10, "white");
+  }
+}
+
 function render () {
-  drawRect(0, 0, canvas.width, canvas.height, "black"); // fondo
+  drawRect(0, 0, canvas.width, canvas.height, "black"); 
+  drawNet();
   drawText(player.score, canvas.width / 4, 50);
   drawText(computer.score, 3 * canvas.width / 4, 50);
   drawRect(player.x, player.y, player.width, player.height, player.color);
@@ -88,7 +95,7 @@ function update() {
     ball.velocityY = -ball.velocityY;
   }
 
-  computer.y += ((ball.y - (computer.y + computer.height / 2))) * 0.1;
+  computer.y += ((ball.y - (computer.y + computer.height / 2))) * 0.05
 
   let jugador = ball.x < canvas.width / 2 ? player : computer;
 
