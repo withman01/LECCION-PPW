@@ -32,6 +32,9 @@ const ball = {
   color: "white"
 };
 
+const PUNTAJE_META = 5;
+let gameOver = false;
+
 const beep = new Audio("retrohit.wav");
 const scoreSound = new Audio("retrocoin.wav");
 
@@ -87,9 +90,14 @@ function moverPaletaJugador(evt) {
 }
 
 function gameLoop() {
-  update();
-  render();
+  if (!gameOver) {
+    update();
+    render();
+  } else {
+    mostrarGanador();
+  }
 }
+
 
 function update() {
   ball.x += ball.velocityX;
@@ -114,10 +122,12 @@ function update() {
   if (ball.x - ball.radius < 0) {
     computer.score++;
      scoreSound.play();
+     if (player.score >= PUNTAJE_META) gameOver = true;
     resetBall();
   } else if (ball.x + ball.radius > canvas.width) {
     player.score++;
      scoreSound.play();
+     if (player.score >= PUNTAJE_META) gameOver = true;
     resetBall();
   }
 }
