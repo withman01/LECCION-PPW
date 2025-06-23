@@ -32,6 +32,10 @@ const ball = {
   color: "white"
 };
 
+const beep = new Audio("retrohit.wav");
+const scoreSound = new Audio("retrocoin.wav");
+
+
 function drawRect(x, y, w, h, color) {
   ctx.fillStyle = color;
   ctx.fillRect(x, y, w, h);
@@ -93,6 +97,7 @@ function update() {
 
   if (ball.y - ball.radius < 0 || ball.y + ball.radius > canvas.height) {
     ball.velocityY = -ball.velocityY;
+    beep.play();
   }
 
   computer.y += ((ball.y - (computer.y + computer.height / 2))) * 0.05
@@ -101,15 +106,18 @@ function update() {
 
   if (colision(ball, jugador)) {
     ball.velocityX = -ball.velocityX;
+    beep.play();
     let angulo = (ball.y - (jugador.y + jugador.height / 2)) / (jugador.height / 2);
     ball.velocityY = angulo * ball.speed;
   }
 
   if (ball.x - ball.radius < 0) {
     computer.score++;
+     scoreSound.play();
     resetBall();
   } else if (ball.x + ball.radius > canvas.width) {
     player.score++;
+     scoreSound.play();
     resetBall();
   }
 }
